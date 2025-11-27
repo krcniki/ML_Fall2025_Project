@@ -4,6 +4,9 @@ data/
 *.xlsx
 *.log
 
+# Models 
+*.pkl
+
 # Environment
 venv/
 .env

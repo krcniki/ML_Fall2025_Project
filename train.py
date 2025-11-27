@@ -6,6 +6,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+import joblib
 
 from imblearn.pipeline import Pipeline as ImbPipeline
 from imblearn.over_sampling import SMOTE
@@ -103,5 +104,10 @@ def main():
     
     evaluate.plot_feature_importance(best_model, all_feature_names)
 
+    print(f"\n--> Saving best model ({best_result['model_name']}) to 'best_model.pkl'")
+    joblib.dump(best_model, 'best_model.pkl')
+    print("Done!")
+
 if __name__ == "__main__":
     main()
+    
