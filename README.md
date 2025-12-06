@@ -1,4 +1,4 @@
-# ML_Fall2025_Project
+# diabetes-readmission-pipeline
 
 ## Project Overview
 This project is an end-to-end machine learning pipeline designed to predict if a diabetic patient will be readmitted to the hospital within **30 days** of discharge.
