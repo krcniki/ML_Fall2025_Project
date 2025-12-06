@@ -12,7 +12,7 @@ def load_and_clean_data(filepath):
     """
     # Load with '?' as NaN
     print("Loading dataset...")
-    df = pd.read_csv(filepath, na_values='?')
+    df = pd.read_csv(filepath, na_values='?', low_memory=False)
     
     # Drop unusable columns
     cols_to_drop = [
