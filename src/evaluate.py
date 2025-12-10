@@ -18,9 +18,8 @@ os.makedirs("figures/Results", exist_ok=True)
 plt.style.use('ggplot')
 sns.set_palette('colorblind')
 
-# ============================================================
-#                     L O G G I N G
-# ============================================================
+# logging function
+
 def log_experiment(model_name, metrics, note=""):
     """
     Logs the experiment results to a CSV file.
@@ -42,13 +41,11 @@ def log_experiment(model_name, metrics, note=""):
         ])
     print(f"   -> Logged {model_name} to experiments.csv")
 
-# ============================================================
-#                      E D A   P L O T S
-# ============================================================
+# eda plotting function
 def plot_eda(df):
     print("--- Generating EDA Plots (saving instead of showing) ---")
 
-    # --- Target Distribution ---
+    # Target Distribution
     plt.figure(figsize=(6, 4))
     sns.countplot(x='readmitted_lt_30', data=df)
     plt.title('Target Distribution')
@@ -57,7 +54,7 @@ def plot_eda(df):
     plt.close()
     print("Saved: figures/EDA/target_distribution.png")
 
-    # --- Numeric Boxplots ---
+    #  Numeric Boxplots 
     numeric_features = [
         'time_in_hospital', 'num_lab_procedures',
         'num_procedures', 'num_medications'
@@ -79,9 +76,7 @@ def plot_eda(df):
     
     print("--- EDA Plots Saved Successfully ---")
 
-# ============================================================
-#                 E V A L U A T I O N
-# ============================================================
+# evaluation function
 def evaluate_model(model_pipeline, X_test, y_test, model_name):
     y_pred = model_pipeline.predict(X_test)
     y_prob = model_pipeline.predict_proba(X_test)[:, 1] if hasattr(model_pipeline, "predict_proba") else y_pred
@@ -103,7 +98,7 @@ def evaluate_model(model_pipeline, X_test, y_test, model_name):
         'roc_auc': auc
     }
     
-    # --- LOGGING CALL ADDED HERE ---
+    # Log the experiment
     log_experiment(model_name, metrics, note="Phase 3 Run - SMOTE")
     
     return {
@@ -138,9 +133,7 @@ def plot_results(results_list):
     print(results_df[['model_name', 'accuracy', 'f1_score', 'roc_auc']])
 
 
-# ============================================================
-#            F E A T U R E   I M P O R T A N C E
-# ============================================================
+# feature importance plotting function
 def plot_feature_importance(best_model_pipeline, feature_names):
     model = best_model_pipeline.named_steps['model']
     importances = None
@@ -155,7 +148,7 @@ def plot_feature_importance(best_model_pipeline, feature_names):
         
     if importances is not None:
         # Create a dataframe for visualization
-        # Ensure lengths match (sometimes encoders drop features)
+        # Ensure lengths match 
         if len(importances) != len(feature_names):
             print(f"Warning: Feature names ({len(feature_names)}) and Importance length ({len(importances)}) mismatch.")
             return
